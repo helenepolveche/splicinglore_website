@@ -1,0 +1,4 @@
+data/*
+!data/sl.db
+results
+src/**/*.pyc

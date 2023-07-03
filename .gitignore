@@ -1,0 +1,10 @@
+*.csv
+*.png
+*.gif
+*.jpeg
+*.ico
+tmp_img/*
+*.log
+*.vscode
+*.pyc
+
