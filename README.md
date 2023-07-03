@@ -14,7 +14,7 @@ https://splicinglore.ens-lyon.fr/index.php
 ```
 sudo apt install libcurl4-openssl-dev libxml2-dev libssl-dev pandoc libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev librsvg2-dev libpq-dev  libudunits2-dev unixodbc-dev libproj-dev libgdal-dev libcairo2-dev libxt-dev 
 
-sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libreadline-dev libffi-dev libsqlite3-dev libbz2-dev wget
+sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libreadline-dev libffi-dev libsqlite3-dev libbz2-dev
 ```
 
 ### R packages ( 4.2 )
@@ -26,14 +26,6 @@ install.packages("htmlwidgets", lib = "/usr/local/lib/R/site-library", dependenc
 
 ### Python 3.10
 ```
-wget https://www.python.org/ftp/python/3.10.11/Python-3.10.11.tgz
-tar -xf Python-3.10.*.tgz
-
-./configure --prefix=/usr/local --enable-optimizations --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib"
-make -j $(nproc)
-
-sudo make altinstall
-
 pip3.10 install numpy panda loguru
 pip3.10 install lazyparser statsmodels rich pymysql
 ```
