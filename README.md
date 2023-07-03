@@ -6,7 +6,7 @@ Helene Polveche, Jessica Valat, Nicolas Fontrodona, Audrey Lapendry, Stephane Ja
 
 doi: https://doi.org/10.1101/2023.06.30.547181 
 
-https://splicinglore.ens-lyon.fr/index.php 
+https://splicinglore.ens-lyon.fr
 
 ## Installation 
 
