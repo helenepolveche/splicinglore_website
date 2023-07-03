@@ -24,7 +24,7 @@ install.packages("plotly", lib = "/usr/local/lib/R/site-library", dependencies =
 install.packages("htmlwidgets", lib = "/usr/local/lib/R/site-library", dependencies = T) 
 ```
 
-### Python 3.10
+### Python ( 3.10 )
 ```
 pip3.10 install numpy panda loguru
 pip3.10 install lazyparser statsmodels rich pymysql
