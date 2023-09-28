@@ -15,6 +15,8 @@ https://splicinglore.ens-lyon.fr
 sudo apt install libcurl4-openssl-dev libxml2-dev libssl-dev pandoc libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev librsvg2-dev libpq-dev  libudunits2-dev unixodbc-dev libproj-dev libgdal-dev libcairo2-dev libxt-dev 
 
 sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libreadline-dev libffi-dev libsqlite3-dev libbz2-dev
+
+sudo apt install bedtools
 ```
 
 ### R packages ( 4.2 )
