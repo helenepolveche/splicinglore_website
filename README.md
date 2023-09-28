@@ -22,6 +22,12 @@ sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-
 install.packages("tidyverse", lib = "/usr/local/lib/R/site-library", dependencies = T) 
 install.packages("plotly", lib = "/usr/local/lib/R/site-library", dependencies = T) 
 install.packages("htmlwidgets", lib = "/usr/local/lib/R/site-library", dependencies = T) 
+
+ if (!requireNamespace("BiocManager", quietly = TRUE))
+   install.packages("BiocManager", lib = "/usr/local/lib/R/site-library", dependencies=T)
+ BiocManager::install("rtracklayer", lib = "/usr/local/lib/R/site-library", dependencies=T)
+ BiocManager::install("liftOver", lib = "/usr/local/lib/R/site-library", dependencies=T)
+
 ```
 
 ### Python ( 3.10 )
