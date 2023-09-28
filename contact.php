@@ -11,6 +11,7 @@ unset($_POST);
 		<legend style="color: darkgreen; font-family: GeosansLight; font-size:200%;">Contact</legend>
 		<p>For all inquiries related to SplicingLore, please send a message to Dr Cyril Bourgeois or Dr Didier Auboeuf (name.surname@inserm.fr)</p>
 		<p> Our lab : <a href="https://www.ens-lyon.fr/LBMC/equipes/epissage-alternatif-et-progression-tumorale?set_language=en&cl=en" target="_blank">LBMC - ENS de Lyon </a></p>
+		<p>Database : <a href='https://fasterdb.ens-lyon.fr/faster/home.pl' target="_blank">FasterDB</a></p>
 	</fieldset></br></br>
 	<fieldset style="margin-left: 30%; width: 65%; margin-bottom: 100px;">
 		<legend style="color: darkgreen; font-family: GeosansLight; font-size:200%;">Cite us</legend>

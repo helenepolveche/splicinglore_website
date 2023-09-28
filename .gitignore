@@ -7,4 +7,5 @@ tmp_img/*
 *.log
 *.vscode
 *.pyc
-
+*.bed
+.Rproj.user

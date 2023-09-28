@@ -1,0 +1,45 @@
+# if (!requireNamespace("BiocManager", quietly = TRUE))
+#   install.packages("BiocManager")
+# BiocManager::install("rtracklayer")
+# 
+# if (!require("BiocManager", quietly = TRUE))
+#   install.packages("BiocManager")
+# BiocManager::install("liftOver")
+
+#library(rtracklayer)
+library(liftOver)
+library(tidyverse)
+
+### tiny data ###
+# https://pubmed.ncbi.nlm.nih.gov/36601126/
+# Table 2
+
+dt <- read.csv2(file = "./tmp_lift/exons_list.csv", header = T, sep = ";")
+#colnames(dt) <- c("desc", "chr","start", "end")
+
+grDt <- makeGRangesFromDataFrame(dt, na.rm=TRUE, keep.extra.columns=TRUE)
+
+## ----getch--------------------------------------------------------------------
+
+#path = system.file(package="liftOver", "extdata", "./data/hg38ToHg19.over.chain")
+
+# import the chain file
+ch <- import.chain("./Rscripts/hg19ToHg38.over.chain")
+#ch
+#str(ch[[1]])
+
+
+# run liftOver
+results <- as.data.frame(liftOver(grDt, ch)) %>% 
+  mutate(seqnames = as.character(seqnames) ) %>% 
+  mutate(chr = str_sub(seqnames, 4,nchar(seqnames)))
+
+
+bed <- results[,c("desc", "chr", "start", "end")]
+
+write.table(bed, "./tmp_lift/bedExons_FasterDB-to-hg38.bed", col.names = FALSE, sep = "\t", 
+            row.names = FALSE, quote = FALSE)
+
+
+# bedtools intersect -wb -a ./results/bedExons.bed -b ./data/exons_genes_fasterdb.bed > ./results/infos_exons_to_FasterDB.bed
+

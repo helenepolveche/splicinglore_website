@@ -102,7 +102,7 @@ function rcalcul(){
 	$tableResults .= "</script>";
 
         // partie tableau de Score
-        $tableResults .= "<table style ='font-size: small;' id='table-a-trier'><thead>";
+        $tableResults .= "<table style='font-size: small;' id='table-a-trier'><thead>";
         $tableResults .= "<tr><th data-sort='string' id='trierTH'>Projects</th>";
         $tableResults .= "<th data-sort='float' id='trierTH'>Score</th>";
         $tableResults .= "<th data-sort='float' id='trierTH'><i>p</i>-value</th>";
@@ -152,6 +152,122 @@ function rcalcul(){
 	}	
 	return($tableResults);
 }
+
+// liftOver a partir de hg38 vers FasterDB ( hg19 )
+function liftcalcul($optsens){
+
+        unlink('./tmp_lift/bedExons.bed'); //suppression de l'ancien fichier de resultats
+	unlink('./tmp_lift/infos_exons_to_FasterDB.bed'); //suppression de l'ancien fichier de resultats
+	unlink('./tmp_lift/bedExons_FasterDB-to-hg38.bed'); //suppression de l'ancien fichier de resultats
+
+
+	$tableResults = "";
+
+	if ( $optsens == "hg38toFasterDB"){
+		exec("R --vanilla < ./Rscripts/liftOver_hg38-to-hg19.R");
+		error_log("Rscripts hg38 --> hg19 : done ");
+		exec("bedtools intersect -wb -a ./tmp_lift/bedExons.bed -b ./Rscripts/exons_genes_fasterdb.bed > ./tmp_lift/infos_exons_to_FasterDB.bed");
+		error_log("bedtools hg19 --> FasterDB : done ");
+
+
+		$tableResults = "<script type='application/javascript' src='./js/stupidtable.min.js'></script>";
+	        $tableResults .= "<script>";
+	        $tableResults .= "$(document).ready(function(){";
+	        $tableResults .= "$('#table-a-trier').stupidtable()})";
+	        $tableResults .= "</script>";
+
+        // partie tableau de Score
+	        $tableResults .= "<table style ='background-color: #faf8f5; font-size: small;' id='table-a-trier'><thead>";
+	        $tableResults .= "<tr><th data-sort='string' id='trierTH'>Identifier</th>";
+	        $tableResults .= "<th data-sort='string' id='trierTH'>chr</th>";
+	        $tableResults .= "<th data-sort='int' id='trierTH'>start</th>";
+	        $tableResults .= "<th data-sort='int' id='trierTH'>end</th>";
+	        $tableResults .= "<th data-sort='string' id='trierTH'>FasterDB name</th>";
+	        $tableResults .= "<th data-sort='string' id='trierTH'>strand</th>";
+		$tableResults .= "</tr></thead><tbody>";
+
+
+	        if (file_exists("./tmp_lift/infos_exons_to_FasterDB.bed")) {
+
+        	        $file = fopen("./tmp_lift/infos_exons_to_FasterDB.bed", "r");
+        	        $lineNumber = 1;
+        	        while (!feof($file)) {
+        	                $row = fgets($file, 1024);
+        	                if ($row != ''){
+                                        $tableResults .= "<tr>";
+                                        $cells = explode("\t", $row);
+                                        $numb_cell = 1;
+                                        foreach($cells as $c){
+                                        //echo "numb_cell = ".$numb_cell."<br />" ;
+						if ( ($numb_cell == 4) || ($numb_cell == 5) || ($numb_cell == 6) || ($numb_cell == 7) || ($numb_cell == 8) || ($numb_cell == 10) ){
+							$tableResults .= "<td>".$c."</td>" ;
+						}
+						$numb_cell++;
+					}
+					$tableResults .= "</tr>";
+                        		$lineNumber++;
+				}
+			}
+                	$tableResults .= "</tbody></table>";
+                	fclose($file);
+        	} else { ###LAAAAA
+               	$tableResults .= "<tr><td><b style='color: #E69F00;'>Warning : An error has occurred in your input data </b></td></tr>" ;
+                $tableResults .= "</tbody></table>";
+        	}
+	} else {
+		## FASTERDB --> HG38
+		exec("R --vanilla < ./Rscripts/liftOver_FasterDB-to-hg38.R");
+		error_log("Rscripts FasterDB --> hg38 : done ");
+
+		$tableResults = "<script type='application/javascript' src='./js/stupidtable.min.js'></script>";
+                $tableResults .= "<script>";
+                $tableResults .= "$(document).ready(function(){";
+                $tableResults .= "$('#table-a-trier').stupidtable()})";
+                $tableResults .= "</script>";
+
+        // partie tableau de Score
+                $tableResults .= "<table style ='background-color: #faf8f5; font-size: small;' id='table-a-trier'><thead>";
+                $tableResults .= "<tr><th data-sort='string' id='trierTH'>FasterDB name</th>";
+                $tableResults .= "<th data-sort='string' id='trierTH'>chr (hg38)</th>";
+                $tableResults .= "<th data-sort='int' id='trierTH'>start (hg38)</th>";
+                $tableResults .= "<th data-sort='int' id='trierTH'>end (hg38)</th>";
+                $tableResults .= "</tr></thead><tbody>";
+
+
+		if (file_exists("./tmp_lift/bedExons_FasterDB-to-hg38.bed")) {
+                        $file = fopen("./tmp_lift/bedExons_FasterDB-to-hg38.bed", "r");
+                        $lineNumber = 1;
+                        while (!feof($file)) {
+                                $row = fgets($file, 1024);
+                                if ($row != ''){
+                                        $tableResults .= "<tr>";
+                                        $cells = explode("\t", $row);
+                                        $numb_cell = 1;
+                                        foreach($cells as $c){
+                                        //echo "numb_cell = ".$numb_cell."<br />" ;
+                                        //if ( ($numb_cell == 4) || ($numb_cell == 5) || ($numb_cell == 6) || ($numb_cell == 7) || ($numb_cell == 8) || ($numb_cell == 10) ){
+                                        	$tableResults .= "<td>".$c."</td>" ;
+                                        //}
+                                        	$numb_cell++;
+                                        }
+                                        $tableResults .= "</tr>";
+                                        $lineNumber++;
+                                }
+                        }
+                        $tableResults .= "</tbody></table>";
+                        fclose($file);
+                } else { ###LAAAAA
+                $tableResults .= "<tr><td><b style='color: #E69F00;'>Warning : An error has occurred in your input data </b></td></tr>" ;
+                $tableResults .= "</tbody></table>";
+                }
+
+
+	}
+
+	return($tableResults);
+}
+
+
 
 //chargement du tableau ./tmp/permutations_details.csv
 function tab_details(){
