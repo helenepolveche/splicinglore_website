@@ -9,7 +9,7 @@ doi: https://doi.org/10.1101/2023.06.30.547181
 https://splicinglore.ens-lyon.fr
 
 <p align="center">
-    <img title="vignette SL" src="./img/vignette.jpg" width=100%>
+    <img title="vignette SL" src="./img/vignette.jpg" width=90%>
 </p>
 
 ## Installation 
