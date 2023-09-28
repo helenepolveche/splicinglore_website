@@ -8,7 +8,7 @@ doi: https://doi.org/10.1101/2023.06.30.547181
 
 https://splicinglore.ens-lyon.fr
 
-![](./img/vignette.tif)
+![](https://github.com/helenepolveche/splicinglore_website/tree/main/img/vignette.tif)
 
 ## Installation 
 
